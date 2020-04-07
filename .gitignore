@@ -1,0 +1,7 @@
+Makefile
+*.make
+bin/
+.vs/
+*vcxproj*
+*.sln
+*VC*db
