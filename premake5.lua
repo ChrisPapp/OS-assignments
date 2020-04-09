@@ -11,7 +11,8 @@ project "Pizza"
 
     files { "src/**.h", "src/**.c"}
 
-    filter "system:windows"
+    -- On Visual Studio only, link pthread-win32 library, and include it's headers.
+    filter { "system:windows", "action:vs*" }
         includedirs {
             "vendor/pthreads-win32/include/"
         }
@@ -21,7 +22,7 @@ project "Pizza"
         postbuildcommands {
             "{COPY} vendor/pthreads-win32/dll/x86/pthreadVC2.dll %{cfg.targetdir}"
         }
-    filter "system:linux"
+    filter "action:gmake*"
         linkoptions { "-pthread" }
 
     filter "configurations:Debug"
