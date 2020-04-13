@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define HAVE_STRUCT_TIMESPEC // Prevents type redefinition
+#ifdef WINDOWS_VS
+#define HAVE_STRUCT_TIMESPEC // https://stackoverflow.com/questions/33557506/timespec-redefinition-error
+#endif // WINDOWS_VS
+
 #include <pthread.h>
 
 #define NUM_THREADS	5
