@@ -12,7 +12,7 @@
 #include <unistd.h>
 #endif
 
-void wait(int seconds)
+void wait_(int seconds)
 {
 #ifdef _WIN32
 	Sleep(1000 * seconds);
@@ -44,7 +44,7 @@ void *order(void *x) {
 	cooks--;
 	rc = pthread_mutex_unlock(&lock);
 
-	wait(2); //kane kapoia douleia me ton paraskevasti
+	wait_(2); //kane kapoia douleia me ton paraskevasti
 
 	rc = pthread_mutex_lock(&lock);
 	printf("H paraggelia %d eksipiretithike epitixos! \n", id);
