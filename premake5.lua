@@ -10,6 +10,7 @@ project "Pizza"
     objdir ("bin/obj/" .. outputdir)
 
     files { "src/**.h", "src/**.c"}
+    includedirs { "src/"}
 
     -- On Visual Studio only, link pthread-win32 library, and include it's headers.
     filter { "system:windows", "action:vs*" }

@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifdef WINDOWS_VS
 #define HAVE_STRUCT_TIMESPEC // https://stackoverflow.com/questions/33557506/timespec-redefinition-error
@@ -11,6 +11,7 @@
 #else
 #include <unistd.h>
 #endif
+#include "producer.h"
 
 #define N_COOK 6
 #define N_OVEN 5
@@ -22,11 +23,9 @@
 #define T_BAKE 5
 
 #define N 10 // gia na trexei to paradeigma
-
-pthread_mutex_t lock;
-pthread_cond_t  cond;
 int cooks = 2; //diathesimoi paraskevastes
 int id[N];
+struct producer *pd;
 
 int rand_r_generator(unsigned int* seed) {
 	return T_ORDER_LOW_LIMIT + (rand_r(seed) % T_ORDER_HIGH_LIMIT);
@@ -44,26 +43,8 @@ void wait_(int seconds)
 void *order(void *x) {
 
 	int id = *(int *)x;
-	int rc;
-	printf("Hello from order: %d\n", id);
 
-	rc = pthread_mutex_lock(&lock);
-	while (cooks == 0) {
-		printf("H paraggelia %d, den brike diathesimo paraskevasti. Blocked...\n", id);
-		rc = pthread_cond_wait(&cond, &lock);
-	}
-	printf("H paraggelia %d eksipiretitai.\n", id);
-	cooks--;
-	rc = pthread_mutex_unlock(&lock);
-
-	wait_(2); //kane kapoia douleia me ton paraskevasti
-
-	rc = pthread_mutex_lock(&lock);
-	printf("H paraggelia %d eksipiretithike epitixos! \n", id);
-	cooks++;
-	rc = pthread_cond_signal(&cond);
-	rc = pthread_mutex_unlock(&lock);
-
+	producer_place_request(pd, id);
 	pthread_exit(NULL);
 }
 
@@ -84,9 +65,8 @@ int main(int argc, char* argv[]) {
 	for (rc = 0; rc < N; rc++)
 		printf("%d\n", rand_r_generator(&seed));
 
-	/*
-	pthread_mutex_init(&lock, NULL);
-	pthread_cond_init(&cond, NULL);
+	pd = malloc(sizeof(struct producer*));
+	producer_init(pd, cooks);
 
 	for (int i = 0; i < N; i++) {
 		id[i] = i + 1;
@@ -98,11 +78,10 @@ int main(int argc, char* argv[]) {
 		pthread_join(threads[i], NULL);
 	}
 
-	pthread_mutex_destroy(&lock);
-	pthread_cond_destroy(&cond);
+	producer_destroy(pd);
+	free(pd);
 
 	return 0;
-	*/
 }
 
 
