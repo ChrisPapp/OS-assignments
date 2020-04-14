@@ -12,6 +12,30 @@
 #include <unistd.h>
 #endif
 
+#define N_COOK 6
+#define N_OVEN 5
+#define T_ORDER_LOW_LIMIT 1
+#define T_ORDER_HIGH_LIMIT 5
+#define N_ORDER_LOW_LIMIT 1
+#define N_ORDER_HIGH_LIMIT 5
+#define T_PREPARE 1
+#define T_BAKE 5
+
+#define N 10 // gia na trexei to paradeigma
+
+pthread_mutex_t lock;
+pthread_cond_t  cond;
+int cooks = 2; //diathesimoi paraskevastes
+int id[N];
+
+void srand_seed_initializer(int srand_seed) {
+	srand(srand_seed);	
+}
+
+int rand_generator() {
+	return T_ORDER_LOW_LIMIT + (rand() % T_ORDER_HIGH_LIMIT);
+}
+
 void wait_(int seconds)
 {
 #ifdef _WIN32
@@ -20,14 +44,6 @@ void wait_(int seconds)
 	sleep(seconds);
 #endif
 }
-
-#define N 10
-
-pthread_mutex_t lock;
-pthread_cond_t  cond;
-
-int cooks = 2; //diathesimoi paraskevastes
-int id[N];
 
 void *order(void *x) {
 
@@ -56,11 +72,22 @@ void *order(void *x) {
 }
 
 
-int main() {
-
+int main(int argc, char* argv[]) {
 	int rc;
+	int srand_seed;
+	int n_customer;
 	pthread_t threads[N];
+		
+	if (argc == 3) {
+		n_customer = atoi(argv[1]);
+		srand_seed = atoi(argv[2]);
+	} else {
+		printf("Expected two Integers \n");
+		exit(1);
+	}
+	srand_seed_initializer(srand_seed);
 
+	/*
 	pthread_mutex_init(&lock, NULL);
 	pthread_cond_init(&cond, NULL);
 
@@ -78,4 +105,7 @@ int main() {
 	pthread_cond_destroy(&cond);
 
 	return 0;
+	*/
 }
+
+
