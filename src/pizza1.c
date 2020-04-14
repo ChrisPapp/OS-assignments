@@ -28,12 +28,8 @@ pthread_cond_t  cond;
 int cooks = 2; //diathesimoi paraskevastes
 int id[N];
 
-void srand_seed_initializer(int srand_seed) {
-	srand(srand_seed);	
-}
-
-int rand_generator() {
-	return T_ORDER_LOW_LIMIT + (rand() % T_ORDER_HIGH_LIMIT);
+int rand_r_generator(unsigned int* seed) {
+	return T_ORDER_LOW_LIMIT + (rand_r(seed) % T_ORDER_HIGH_LIMIT);
 }
 
 void wait_(int seconds)
@@ -73,19 +69,20 @@ void *order(void *x) {
 
 
 int main(int argc, char* argv[]) {
+	unsigned int seed;
 	int rc;
-	int srand_seed;
 	int n_customer;
 	pthread_t threads[N];
 		
 	if (argc == 3) {
 		n_customer = atoi(argv[1]);
-		srand_seed = atoi(argv[2]);
+		seed = atoi(argv[2]);
 	} else {
 		printf("Expected two Integers \n");
 		exit(1);
 	}
-	srand_seed_initializer(srand_seed);
+	for (rc = 0; rc < N; rc++)
+		printf("%d\n", rand_r_generator(&seed));
 
 	/*
 	pthread_mutex_init(&lock, NULL);
