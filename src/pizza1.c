@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "producer.h"
 #include "utils.h"
+#include "theme.h"
 
 #ifdef _WIN32
 #define HAVE_STRUCT_TIMESPEC // https://stackoverflow.com/questions/33557506/timespec-redefinition-error
@@ -20,6 +21,7 @@
 #define N 10 // gia na trexei to paradeigma
 int cooks = 2; //diathesimoi paraskevastes
 int id[N];
+struct theme *th;
 struct producer *pd;
 
 int rand_r_generator(unsigned int *seed) {
@@ -48,8 +50,10 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
+	th = (struct theme *) malloc(sizeof(struct theme));
+	pizza_theme_init(th);
 	pd = (struct producer *) malloc(sizeof(struct producer));
-	producer_init(pd, cooks);
+	producer_init(pd, th, cooks);
 
 	for (int i = 0; i < N; i++) {
 		id[i] = i + 1;
@@ -63,6 +67,7 @@ int main(int argc, char *argv[]) {
 
 	producer_destroy(pd);
 	free(pd);
+	free(th);
 	printf("Press Enter to continue");
 	getchar();
 	return 0;
