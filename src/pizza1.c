@@ -9,24 +9,11 @@
 #endif // _WIN32
 #include <pthread.h>
 
-#define N_COOK 6
-#define N_OVEN 5
-#define T_ORDER_LOW_LIMIT 1
-#define T_ORDER_HIGH_LIMIT 5
-#define N_ORDER_LOW_LIMIT 1
-#define N_ORDER_HIGH_LIMIT 5
-#define T_PREPARE 1
-#define T_BAKE 5
-
 #define N 10 // gia na trexei to paradeigma
 int cooks = 2; //diathesimoi paraskevastes
 int id[N];
 struct theme *th;
 struct producer *pd;
-
-int rand_r_generator(unsigned int *seed) {
-	return T_ORDER_LOW_LIMIT + (rand_r_(seed) % T_ORDER_HIGH_LIMIT);
-}
 
 void *order(void *x) {
 	int id = *(int *)x;
@@ -34,7 +21,6 @@ void *order(void *x) {
 	producer_place_request(pd, id);
 	pthread_exit(NULL);
 }
-
 
 int main(int argc, char *argv[]) {
 	unsigned int seed;
@@ -72,5 +58,4 @@ int main(int argc, char *argv[]) {
 	getchar();
 	return 0;
 }
-
 
