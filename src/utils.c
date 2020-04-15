@@ -1,10 +1,10 @@
 #ifdef _WIN32
 #include <windows.h>
 #else
-#include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
 #endif
+#include <stdio.h>
+#include <stdlib.h>
 #include "utils.h"
 
 void initialize_mutex() {
