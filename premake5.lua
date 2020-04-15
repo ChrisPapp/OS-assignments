@@ -17,6 +17,9 @@ project "Pizza"
         includedirs {
             "vendor/pthreads-win32/include/"
         }
+        -- https://stackoverflow.com/questions/33557506/timespec-redefinition-error
+        defines "HAVE_STRUCT_TIMESPEC"
+
         libdirs { "vendor/pthreads-win32/lib/x86/",}
         links { "pthreadVC2" }
         -- copy a file from the objects directory to the target directory

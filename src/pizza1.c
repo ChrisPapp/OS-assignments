@@ -4,12 +4,9 @@
 #include "utils.h"
 #include "theme.h"
 
-#ifdef _WIN32
-#define HAVE_STRUCT_TIMESPEC // https://stackoverflow.com/questions/33557506/timespec-redefinition-error
-#endif // _WIN32
 #include <pthread.h>
 
-#define N 10 // gia na trexei to paradeigma
+#define N 4 // gia na trexei to paradeigma
 int cooks = 2; //diathesimoi paraskevastes
 int id[N];
 struct theme *th;
@@ -18,7 +15,7 @@ struct producer *pd;
 void *order(void *x) {
 	int id = *(int *)x;
 
-	producer_place_request(pd, id);
+	producer_place_request(pd, id, 10);
 	pthread_exit(NULL);
 }
 

@@ -1,6 +1,3 @@
-#ifdef _WIN32
-#define HAVE_STRUCT_TIMESPEC // https://stackoverflow.com/questions/33557506/timespec-redefinition-error
-#endif // _WIN32
 #include <pthread.h>
 
 #define N_COOK 6
