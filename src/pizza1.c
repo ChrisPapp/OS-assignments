@@ -66,6 +66,8 @@ int main(int argc, char* argv[]) {
 
 	producer_destroy(pd);
 	free(pd);
+	printf("Press Enter to continue");
+	getchar();
 	return 0;
 }
 
