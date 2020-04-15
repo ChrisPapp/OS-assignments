@@ -2,21 +2,18 @@
 #include "producer.h"
 #include "utils.h"
 
-void producer_init(struct producer *pd, int resource_1)
-{
+void producer_init(struct producer *pd, int resource_1) {
 	pthread_mutex_init(&pd->lock, NULL);
 	pthread_cond_init(&pd->cond, NULL);
 	pd->resource_1 = resource_1;
 }
 
-void producer_destroy(struct producer *pd)
-{
+void producer_destroy(struct producer *pd) {
 	pthread_mutex_destroy(&pd->lock);
 	pthread_cond_destroy(&pd->cond);
 }
 
-void producer_place_request(struct producer *pd, int from)
-{
+void producer_place_request(struct producer *pd, int from) {
 	printf("Client #%d made a request\n", from);
 	pthread_mutex_lock(&pd->lock);
 	while (pd->resource_1 == 0) {

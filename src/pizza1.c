@@ -22,12 +22,11 @@ int cooks = 2; //diathesimoi paraskevastes
 int id[N];
 struct producer *pd;
 
-int rand_r_generator(unsigned int* seed) {
+int rand_r_generator(unsigned int *seed) {
 	return T_ORDER_LOW_LIMIT + (rand_r_(seed) % T_ORDER_HIGH_LIMIT);
 }
 
 void *order(void *x) {
-
 	int id = *(int *)x;
 
 	producer_place_request(pd, id);
@@ -35,7 +34,7 @@ void *order(void *x) {
 }
 
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 	unsigned int seed;
 	int rc;
 	int n_customer;
@@ -48,8 +47,6 @@ int main(int argc, char* argv[]) {
 		printf("Expected two Integers \n");
 		exit(1);
 	}
-	for (rc = 0; rc < N; rc++)
-		printf("%d\n", rand_r_generator(&seed));
 
 	pd = (struct producer *) malloc(sizeof(struct producer));
 	producer_init(pd, cooks);

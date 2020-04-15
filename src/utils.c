@@ -7,8 +7,7 @@
 
 
 
-void wait_(int seconds)
-{
+void wait_(int seconds) {
 #ifdef _WIN32
 	Sleep(1000 * seconds);
 #else
@@ -17,9 +16,7 @@ void wait_(int seconds)
 }
 
 
-int
-rand_r_(unsigned int *seed)
-{
+int rand_r_(unsigned int *seed) {
 #ifdef _WIN32
 	// https://code.woboq.org/userspace/glibc/stdlib/rand_r.c.html
 	unsigned int next = *seed;
