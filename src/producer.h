@@ -1,7 +1,7 @@
 #pragma once
-#ifdef WINDOWS_VS
+#ifdef _WIN32
 #define HAVE_STRUCT_TIMESPEC // https://stackoverflow.com/questions/33557506/timespec-redefinition-error
-#endif // WINDOWS_VS
+#endif // _WIN32
 #include <pthread.h>
 
 struct producer {
@@ -9,6 +9,7 @@ struct producer {
 	pthread_cond_t  cond;
 	int resource_1;
 };
+
 void producer_init(struct producer *pd, int resource_1);
 void producer_destroy(struct producer *pd);
 void producer_place_request(struct producer *pd, int from);

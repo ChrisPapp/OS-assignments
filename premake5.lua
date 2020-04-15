@@ -17,7 +17,6 @@ project "Pizza"
         includedirs {
             "vendor/pthreads-win32/include/"
         }
-	defines "WINDOWS_VS"
         libdirs { "vendor/pthreads-win32/lib/x86/",}
         links { "pthreadVC2" }
         -- copy a file from the objects directory to the target directory
@@ -31,6 +30,7 @@ project "Pizza"
         defines "DEBUG"
         runtime "Debug"
         symbols "On"
+        debugargs { "2" , "3" }
 
     filter "configurations:Release"
         defines "RELEASE"
