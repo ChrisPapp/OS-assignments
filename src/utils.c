@@ -58,4 +58,3 @@ void wait_(int seconds) {
 	sleep(seconds);
 #endif
 }
-

@@ -17,4 +17,3 @@ void print(char message[128]);
 int rand_r_generator(unsigned int *seed);
 int rand_r_(unsigned int *seed);
 void wait_(int seconds);
-

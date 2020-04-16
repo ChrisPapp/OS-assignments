@@ -13,9 +13,9 @@ struct theme *th;
 struct producer *pd;
 
 void *order(void *x) {
-	int id = *(int *)x;
+	int cust_id = *(int *)x;
 
-	producer_place_request(pd, id, 10);
+	producer_place_request(pd, cust_id, 10);
 	pthread_exit(NULL);
 }
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 	th = (struct theme *) malloc(sizeof(struct theme));
 	pizza_theme_init(th);
 	pd = (struct producer *) malloc(sizeof(struct producer));
-	producer_init(pd, th, cooks);
+	producer_init(pd, th, N_COOK);
 
 	for (int i = 0; i < N; i++) {
 		id[i] = i + 1;
@@ -55,4 +55,3 @@ int main(int argc, char *argv[]) {
 	getchar();
 	return 0;
 }
-
