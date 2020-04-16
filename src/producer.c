@@ -42,7 +42,7 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	}
 	current_resource_2_id = pd->res_2.available--;
 	pthread_mutex_unlock(&pd->res_2.lock);
-	pd->th->on_res_2_assign(from_cust, current_object);
+	pd->th->on_res_2_assign(from_cust);
 	wait_(T_RESOURCE_2); // working
 	
 	// releasing resource_2

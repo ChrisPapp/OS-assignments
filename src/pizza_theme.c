@@ -18,8 +18,8 @@ static void pizza_wait_oven(int client_id) {
 	printf("No available oven found. Customer #%d will have to wait...\n", client_id);
 }
 
-static void pizza_in_oven(int client_id, int obj_id) {
-	printf("Baking the pizza #%d of customer #%d! Smells nice! Almost done...\n", obj_id, client_id);
+static void pizza_in_oven(int client_id) {
+	printf("Baking the pizza(s) of customer #%d! It smells nice! Almost done...\n", client_id);
 }
 
 static void pizza_order_complete(int client_id) {
