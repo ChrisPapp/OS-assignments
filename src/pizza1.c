@@ -6,20 +6,20 @@
 
 #include <pthread.h>
 
+unsigned int seed;
 struct theme *th;
 struct producer *pd;
 
 void *order(void *x) {
 	int cust_id = *(int *)x;
-	producer_place_request(pd, cust_id, 5);
+	producer_place_request(pd, cust_id, rand_r_generator(&seed));
 	pthread_exit(NULL);
 }
 
 int main(int argc, char *argv[]) {
 	int rc;
-	int *cust_id;
+	int cust_id;
 	int n_customers;
-	unsigned int seed;
 	pthread_t *ptr_threads;
 		
 	if (argc == 3) {
@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
-	cust_id = (int *) malloc(sizeof(int) * n_customers);
 	ptr_threads = (pthread_t *) malloc(sizeof(pthread_t) * n_customers);
 	
 	th = (struct theme *) malloc(sizeof(struct theme));
@@ -39,9 +38,9 @@ int main(int argc, char *argv[]) {
 	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2);
 
 	for (int i = 0; i < n_customers; i++) {
-		cust_id[i] = i + 1;
-		printf("Main: creating thread %d\n", i + 1);
-		rc = pthread_create(&ptr_threads[i], NULL, order, &cust_id[i]);
+		cust_id = i + 1;
+		printf("Main: creating thread %d\n", cust_id);
+		rc = pthread_create(&ptr_threads[i], NULL, order, &cust_id);
 	}
 
 	for (int i = 0; i < n_customers; i++) {
@@ -49,7 +48,6 @@ int main(int argc, char *argv[]) {
 	}
 
 	producer_destroy(pd);
-	free(cust_id);
 	free(ptr_threads);
 	free(pd);
 	free(th);
