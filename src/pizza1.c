@@ -6,7 +6,7 @@
 
 #include <pthread.h>
 
-#define N 4 // gia na trexei to paradeigma
+#define N 10 // gia na trexei to paradeigma
 int cooks = 2; //diathesimoi paraskevastes
 int id[N];
 struct theme *th;
@@ -15,7 +15,7 @@ struct producer *pd;
 void *order(void *x) {
 	int cust_id = *(int *)x;
 
-	producer_place_request(pd, cust_id, 10);
+	producer_place_request(pd, cust_id, 5);
 	pthread_exit(NULL);
 }
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 	th = (struct theme *) malloc(sizeof(struct theme));
 	pizza_theme_init(th);
 	pd = (struct producer *) malloc(sizeof(struct producer));
-	producer_init(pd, th, N_COOK);
+	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2);
 
 	for (int i = 0; i < N; i++) {
 		id[i] = i + 1;

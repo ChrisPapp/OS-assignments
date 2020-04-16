@@ -1,13 +1,13 @@
 #include <pthread.h>
 
-#define N_COOK 6
-#define N_OVEN 5
+#define N_RESOURCE_1 6
+#define N_RESOURCE_2 5
+#define T_RESOURCE_1 1
+#define T_RESOURCE_2 5
 #define T_ORDER_LOW_LIMIT 1
 #define T_ORDER_HIGH_LIMIT 5
 #define N_ORDER_LOW_LIMIT 1
 #define N_ORDER_HIGH_LIMIT 5
-#define T_PREPARE 1
-#define T_BAKE 5
 
 pthread_mutex_t printf_lock;
 
