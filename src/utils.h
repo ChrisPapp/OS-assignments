@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #include <pthread.h>
 
 #define N_RESOURCE_1 6
@@ -9,11 +12,12 @@
 #define N_ORDER_LOW_LIMIT 1
 #define N_ORDER_HIGH_LIMIT 5
 
-pthread_mutex_t printf_lock;
+static pthread_mutex_t printf_mutex;
+static unsigned int rand_r_seed;
 
-void initialize_mutex();
-void terminate_mutex();
-void print(char message[128]);
-int rand_r_generator(unsigned int *seed);
+void utils_init();
+void utils_term();
+void sync_printf(const char *format, ...);
+int rand_r_generator();
 int rand_r_(unsigned int *seed);
 void wait_(int seconds);

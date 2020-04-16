@@ -3,29 +3,32 @@
 #else
 #include <unistd.h>
 #endif
-#include <stdio.h>
-#include <stdlib.h>
 #include "utils.h"
 
-void initialize_mutex() {
-  if (pthread_mutex_init(&printf_lock, NULL) != 0) {
-    printf("error in mutex initialization");
-    exit(1);
-  }
+void utils_init(int seed) {
+	rand_r_seed = seed;
+	if (pthread_mutex_init(&printf_mutex, NULL) != 0) {
+		printf("Error in mutex initialization.");
+		exit(1);
+	}
 }
  
-void terminate_mutex() {
-  pthread_mutex_destroy(&printf_lock);
+void utils_term() {
+  pthread_mutex_destroy(&printf_mutex);
 }
 
-void print(char message[128]) {
-	pthread_mutex_lock(&printf_lock);
-	printf("%s", message);
-	pthread_mutex_unlock(&printf_lock);
+void sync_printf(const char *format, ...) {
+	// https://stackoverflow.com/questions/23586682/how-to-use-printf-in-multiple-threads
+	va_list args;
+    va_start(args, format);
+    pthread_mutex_lock(&printf_mutex);
+    vprintf(format, args);
+    pthread_mutex_unlock(&printf_mutex);
+    va_end(args);
 }
 
-int rand_r_generator(unsigned int *seed) {
-	return T_ORDER_LOW_LIMIT + (rand_r_(seed) % T_ORDER_HIGH_LIMIT);
+int rand_r_generator() {
+	return T_ORDER_LOW_LIMIT + (rand_r_(&rand_r_seed) % T_ORDER_HIGH_LIMIT);
 }
 
 int rand_r_(unsigned int *seed) {

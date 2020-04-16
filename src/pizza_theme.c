@@ -7,23 +7,23 @@ static void pizza_begin_order(int client_id, int count) {
 }
 
 static void pizza_wait_cook(int client_id) {
-	printf("No available cook found. Customer #%d will have to wait...\n", client_id);
+	sync_printf("No available cook found. Customer #%d will have to wait...\n", client_id);
 }
 
 static void pizza_prepare(int client_id, int obj_id) {
-	printf("A cook is preparing pizza #%d for customer #%d\n", obj_id, client_id);
+	sync_printf("A cook is preparing pizza #%d for customer #%d\n", obj_id, client_id);
 }
 
 static void pizza_wait_oven(int client_id) {
-	printf("No available oven found. Cook #%d will have to wait...\n", client_id);
+	sync_printf("No available oven found. Cook #%d will have to wait...\n", client_id);
 }
 
 static void pizza_in_oven(int client_id) {
-	printf("Baking the pizza(s) of customer #%d! It smells nice! Almost done...\n", client_id);
+	sync_printf("Baking the pizza(s) of customer #%d! It smells nice! Almost done...\n", client_id);
 }
 
 static void pizza_order_complete(int client_id) {
-	printf("Customer #%d got his pizza(s)\n", client_id);
+	sync_printf("Customer #%d got his pizza(s)\n", client_id);
 }
 
 void pizza_theme_init(struct theme *th) {
