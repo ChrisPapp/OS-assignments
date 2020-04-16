@@ -43,12 +43,13 @@ int main(int argc, char *argv[]) {
 		printf("Main: creating thread %d\n", i + 1);
 		rc = pthread_create(&ptr_threads[i], NULL, order, &cust_id[i]);
 	}
-	
+
 	for (int i = 0; i < n_customers; i++) {
 		pthread_join(ptr_threads[i], NULL);
 	}
 
 	producer_destroy(pd);
+	free(cust_id);
 	free(ptr_threads);
 	free(pd);
 	free(th);
