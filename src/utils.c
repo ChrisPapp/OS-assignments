@@ -3,7 +3,14 @@
 #else
 #include <unistd.h>
 #endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <pthread.h>
 #include "utils.h"
+
+static pthread_mutex_t printf_mutex;
+static unsigned int rand_r_seed;
 
 void utils_init(int seed) {
 	rand_r_seed = seed;

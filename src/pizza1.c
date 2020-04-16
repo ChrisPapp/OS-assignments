@@ -9,17 +9,18 @@ struct theme *th;
 struct producer *pd;
 
 void *order(void *x) {
-	int cust_id = (int)x;
+	int cust_id = *(int *)x;
 	producer_place_request(pd, cust_id, rand_r_generator());
 	pthread_exit(NULL);
 }
 
 int main(int argc, char *argv[]) {
+	int *cust_id;
 	int n_customers;
 	unsigned int seed;
 	pthread_t *ptr_threads;
 	
-	// checking arguments	
+	// checking arguments
 	if (argc == 3) {
 		n_customers = atoi(argv[1]);
 		seed = atoi(argv[2]);
@@ -31,6 +32,7 @@ int main(int argc, char *argv[]) {
 	// initialization step
 	utils_init(seed);
 	ptr_threads = (pthread_t *) malloc(sizeof(pthread_t) * n_customers);
+	cust_id = (int *) malloc(sizeof(int) * n_customers);
 	th = (struct theme *) malloc(sizeof(struct theme));
 	pizza_theme_init(th);
 	pd = (struct producer *) malloc(sizeof(struct producer));
@@ -38,7 +40,8 @@ int main(int argc, char *argv[]) {
 
 	// executable step
 	for (int i = 0; i < n_customers; i++) {
-		pthread_create(&ptr_threads[i], NULL, order, (void *)(i + 1));
+		cust_id[i] = i + 1;
+		pthread_create(&ptr_threads[i], NULL, order, &cust_id[i]);
 	}
 	for (int i = 0; i < n_customers; i++) {
 		pthread_join(ptr_threads[i], NULL);
