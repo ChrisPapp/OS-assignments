@@ -8,7 +8,7 @@
 void utils_init(int seed) {
 	rand_r_seed = seed;
 	if (pthread_mutex_init(&printf_mutex, NULL) != 0) {
-		printf("Error in mutex initialization.");
+		printf("Error in printf_mutex initialization.");
 		exit(1);
 	}
 }
