@@ -15,7 +15,7 @@ static void pizza_prepare(int client_id, int obj_id) {
 }
 
 static void pizza_wait_oven(int client_id) {
-	printf("No available oven found. Customer #%d will have to wait...\n", client_id);
+	printf("No available oven found. Cook #%d will have to wait...\n", client_id);
 }
 
 static void pizza_in_oven(int client_id) {
