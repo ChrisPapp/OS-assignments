@@ -11,14 +11,12 @@ struct theme *th;
 struct producer *pd;
 
 void *order(void *x) {
-	int cust_id = *(int *)x;
+	int cust_id = (int)x;
 	producer_place_request(pd, cust_id, rand_r_generator(&seed));
 	pthread_exit(NULL);
 }
 
 int main(int argc, char *argv[]) {
-	int rc;
-	int cust_id;
 	int n_customers;
 	pthread_t *ptr_threads;
 		
@@ -38,9 +36,7 @@ int main(int argc, char *argv[]) {
 	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2);
 
 	for (int i = 0; i < n_customers; i++) {
-		cust_id = i + 1;
-		printf("Main: creating thread %d\n", cust_id);
-		rc = pthread_create(&ptr_threads[i], NULL, order, &cust_id);
+		pthread_create(&ptr_threads[i], NULL, order, (void *)(i + 1));
 	}
 
 	for (int i = 0; i < n_customers; i++) {
