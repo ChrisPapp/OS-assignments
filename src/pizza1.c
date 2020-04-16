@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 		n_customers = atoi(argv[1]);
 		seed = atoi(argv[2]);
 	} else {
-		printf("Expected two Integers \n");
+		printf("Expected two integers as arguments ([number_of_customers] [rand_r_seed]). \n");
 		exit(1);
 	}
 

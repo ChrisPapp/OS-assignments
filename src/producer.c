@@ -58,8 +58,3 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	pthread_cond_signal(&pd->res_1.cond);
 	pthread_mutex_unlock(&pd->res_1.lock);
 }
-
-void producer2_init(struct producer *pd, struct theme *theme, int resource_1){
-	pd->th = theme;
-	resource_init(&pd->res_1, resource_1);
-}
