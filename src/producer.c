@@ -19,7 +19,7 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	int current_resource_2_id;
 	int clock_start, clock_stop;
 
-	clock_start = current_time_in_seconds(); // clock starts ticking
+	clock_start = get_time_passed(); // clock starts ticking
 	pd->th->on_request_begin(from_cust, count);
 
 	// journey through resource_1
@@ -56,7 +56,7 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 
 	// releasing resource_1
 	pthread_mutex_lock(&pd->res_1.lock);
-	clock_stop = current_time_in_seconds(); // Clock stops ticking
+	clock_stop = get_time_passed();
 	pd->th->on_request_complete(from_cust, clock_stop - clock_start);
 	pd->res_1.available++;
 	pthread_cond_signal(&pd->res_1.cond);

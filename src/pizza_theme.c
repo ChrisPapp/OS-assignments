@@ -3,7 +3,7 @@
 #include "utils.h"
 
 static void pizza_begin_order(int client_id, int count) {
-	printf("Hungry customer #%d ordered %d pizza(s)\n", client_id, count);
+	sync_printf("Hungry customer #%d appeared after %u minutes and ordered %d pizza(s)\n", client_id, get_time_passed(), count);
 }
 
 static void pizza_wait_cook(int client_id) {

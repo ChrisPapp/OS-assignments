@@ -11,6 +11,8 @@
 
 static pthread_mutex_t printf_mutex;
 static unsigned int rand_r_seed;
+static unsigned int current_time_in_seconds();
+static unsigned int clock_start;
 
 void utils_init(int seed) {
 	rand_r_seed = seed;
@@ -18,6 +20,7 @@ void utils_init(int seed) {
 		printf("Error in printf_mutex initialization.");
 		exit(1);
 	}
+	clock_start = current_time_in_seconds();
 }
  
 void utils_term() {
@@ -69,7 +72,7 @@ void wait_(int seconds) {
 #endif
 }
 
-int current_time_in_seconds() {
+static unsigned int current_time_in_seconds() {
 #ifdef _WIN32
 	return 0;
 #else
@@ -77,4 +80,8 @@ int current_time_in_seconds() {
 	clock_gettime(CLOCK_REALTIME, &time);
 	return time.tv_sec;
 #endif // _WIN32
+}
+
+unsigned int get_time_passed() {
+	return current_time_in_seconds() - clock_start;
 }
