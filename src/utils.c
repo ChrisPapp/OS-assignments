@@ -68,3 +68,13 @@ void wait_(int seconds) {
 	sleep(seconds);
 #endif
 }
+
+int current_time_in_seconds() {
+#ifdef _WIN32
+	return 0;
+#else
+	struct timespec time;
+	clock_gettime(CLOCK_REALTIME, &time);
+	return time.tv_sec;
+#endif // _WIN32
+}

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <time.h>
 #include "producer.h"
 #include "utils.h"
 #include "theme.h"
@@ -18,10 +17,9 @@ void producer_destroy(struct producer *pd) {
 void producer_place_request(struct producer *pd, int from_cust, int count) {
 	int current_resource_1_id;
 	int current_resource_2_id;
-	int clock;
-	struct timespec start, stop;
+	int clock_start, clock_stop;
 
-	clock_gettime(CLOCK_REALTIME, &start); 	// clock starts ticking
+	clock_start = current_time_in_seconds(); // clock starts ticking
 	pd->th->on_request_begin(from_cust, count);
 
 	// journey through resource_1
@@ -58,9 +56,8 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 
 	// releasing resource_1
 	pthread_mutex_lock(&pd->res_1.lock);
-	clock_gettime(CLOCK_REALTIME, &stop); // clock stops
-	clock = stop.tv_sec - start.tv_sec;	// calculating time passed
-	pd->th->on_request_complete(from_cust, clock);
+	clock_stop = current_time_in_seconds(); // Clock stops ticking
+	pd->th->on_request_complete(from_cust, clock_stop - clock_start);
 	pd->res_1.available++;
 	pthread_cond_signal(&pd->res_1.cond);
 	pthread_mutex_unlock(&pd->res_1.lock);

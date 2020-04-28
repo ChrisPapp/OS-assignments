@@ -13,3 +13,4 @@ void sync_printf(const char *format, ...);
 int rand_r_generator();
 int rand_r_(unsigned int *seed);
 void wait_(int seconds);
+int current_time_in_seconds();
