@@ -22,8 +22,8 @@ static void pizza_in_oven(int client_id) {
 	sync_printf("Baking the pizza(s) of customer #%d! It smells nice! Almost done...\n", client_id);
 }
 
-static void pizza_order_complete(int client_id) {
-	sync_printf("Customer #%d got his pizza(s)\n", client_id);
+static void pizza_order_complete(int client_id, int clock) {
+	sync_printf("Customer #%d got his pizza(s) in about %d minutes\n", client_id, clock);
 }
 
 void pizza_theme_init(struct theme *th) {
