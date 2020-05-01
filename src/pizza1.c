@@ -10,7 +10,8 @@ struct producer *pd;
 
 void *order(void *x) {
 	int cust_id = *(int *)x;
-	producer_place_request(pd, cust_id, rand_r_generator());
+  wait_(rand_generator(T_ORDER_LOW_LIMIT, T_ORDER_HIGH_LIMIT)); // customer's arrival
+	producer_place_request(pd, cust_id, rand_generator(N_ORDER_LOW_LIMIT, N_ORDER_HIGH_LIMIT));
 	pthread_exit(NULL);
 }
 
@@ -38,7 +39,7 @@ int main(int argc, char *argv[]) {
 	pd = (struct producer *) malloc(sizeof(struct producer));
 	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2);
 
-	// executable step
+	// execution step
 	for (int i = 0; i < n_customers; i++) {
 		cust_id[i] = i + 1;
 		pthread_create(&ptr_threads[i], NULL, order, &cust_id[i]);
@@ -56,4 +57,5 @@ int main(int argc, char *argv[]) {
 	printf("\nPress Enter to continue");
 	getchar();
 	return 0;
+
 }

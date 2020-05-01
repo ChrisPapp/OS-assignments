@@ -9,8 +9,7 @@
 
 void utils_init(int seed);
 void utils_term();
+int rand_generator(int low_limit, int high_limit);
 void sync_printf(const char *format, ...);
-int rand_r_generator();
-int rand_r_(unsigned int *seed);
 void wait_(int seconds);
 unsigned int get_time_passed();
