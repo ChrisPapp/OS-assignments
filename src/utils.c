@@ -16,6 +16,10 @@ static unsigned int clock_start;
 
 void utils_init(int seed) {
 	srand(seed);
+  if (pthread_mutex_init(&rand_n_mutex, NULL) != 0) {
+		printf("Error in rand_n_mutex initialization.");
+		exit(1);
+	}
 	if (pthread_mutex_init(&printf_mutex, NULL) != 0) {
 		printf("Error in printf_mutex initialization.");
 		exit(1);
