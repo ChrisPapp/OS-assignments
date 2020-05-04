@@ -15,6 +15,12 @@ void *order(void *x) {
 	pthread_exit(NULL);
 }
 
+void *order_instant(void *x) {
+	int cust_id = *(int *)x;
+	producer_place_request(pd, cust_id, rand_generator(N_ORDER_LOW_LIMIT, N_ORDER_HIGH_LIMIT));
+	pthread_exit(NULL);
+}
+
 int main(int argc, char *argv[]) {
 	int *cust_id;
 	int n_customers;
@@ -42,7 +48,11 @@ int main(int argc, char *argv[]) {
 	// execution step
 	for (int i = 0; i < n_customers; i++) {
 		cust_id[i] = i + 1;
-		pthread_create(&ptr_threads[i], NULL, order, &cust_id[i]);
+		if (i == 0) {
+			pthread_create(&ptr_threads[i], NULL, order_instant, &cust_id[i]);
+		} else {
+			pthread_create(&ptr_threads[i], NULL, order, &cust_id[i]);
+		}
 	}
 	for (int i = 0; i < n_customers; i++) {
 		pthread_join(ptr_threads[i], NULL);
