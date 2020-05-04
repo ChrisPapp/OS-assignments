@@ -4,16 +4,17 @@
 #include "theme.h"
 
 static pthread_mutex_t max_time_mutex;
+static pthread_mutex_t sum_time_mutex;
 
 void producer_init(struct producer *pd, struct theme *theme, int resource_1, int resource_2){
 	pd->th = theme;
+	pd->sum_time = 0;
 	pd->max_time = 0;
 	resource_init(&pd->res_1, resource_1);
 	resource_init(&pd->res_2, resource_2);
 }
 
 void producer_destroy(struct producer *pd) {
-	pd->th->terminate_producer(0, pd->max_time);
 	resource_destroy(&pd->res_1);
 	resource_destroy(&pd->res_2);
 }
@@ -68,12 +69,14 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	clock_stop = get_time_passed();
 	time_passed = clock_stop - clock_start;
 	pd->th->on_request_complete(from_cust, time_passed);
+  pthread_mutex_lock(&sum_time_mutex);
+  pd->sum_time += time_passed; // summarizing time
+  pthread_mutex_unlock(&sum_time_mutex);
   if (max_time_request(time_passed, pd->max_time)) {
     pthread_mutex_lock(&max_time_mutex);
-    pd->max_time = time_passed;
+    pd->max_time = time_passed; // updating max time
     pthread_mutex_unlock(&max_time_mutex);
   }
-
 }
 
 int max_time_request(unsigned int current_request_time, unsigned int current_max) {
@@ -83,7 +86,4 @@ int max_time_request(unsigned int current_request_time, unsigned int current_max
     return 0;
   }
 }
-
-
-
 

@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// termination step
+	pd->th->terminate_producer(pd->sum_time/n_customers, pd->max_time);
 	producer_destroy(pd);
 	utils_term();
 	free(ptr_threads);
@@ -57,5 +58,4 @@ int main(int argc, char *argv[]) {
 	printf("\nPress Enter to continue");
 	getchar();
 	return 0;
-
 }

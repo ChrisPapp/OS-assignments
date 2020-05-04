@@ -1,14 +1,11 @@
 #pragma once
 #include <pthread.h>
-#include "resource.h"
-
 
 struct resource {
 	pthread_mutex_t lock;
 	pthread_cond_t  cond;
 	int available;
 };
-
 
 void resource_init(struct resource *res, int available);
 void resource_destroy(struct resource *res);
@@ -17,7 +14,7 @@ struct producer {
 	struct theme *th;
 	struct resource res_1;
 	struct resource res_2;
-	unsigned int average_time;
+	unsigned int sum_time;
 	unsigned int max_time;
 };
 
