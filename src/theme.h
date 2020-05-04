@@ -7,6 +7,7 @@ struct theme {
 	void(*on_res_2_unavailable)(int /*client_id */);
 	void(*on_res_2_assign)(int /*client_id */);
 	void(*on_request_complete)(int /*client_id */, int /* clock */);
+	void(*terminate_producer)(unsigned int /*average_time*/, unsigned int /*max_time*/);
 };
 
 void pizza_theme_init(struct theme *th);

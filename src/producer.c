@@ -3,13 +3,17 @@
 #include "utils.h"
 #include "theme.h"
 
+static pthread_mutex_t max_time_mutex;
+
 void producer_init(struct producer *pd, struct theme *theme, int resource_1, int resource_2){
 	pd->th = theme;
+	pd->max_time = 0;
 	resource_init(&pd->res_1, resource_1);
 	resource_init(&pd->res_2, resource_2);
 }
 
 void producer_destroy(struct producer *pd) {
+	pd->th->terminate_producer(0, pd->max_time);
 	resource_destroy(&pd->res_1);
 	resource_destroy(&pd->res_2);
 }
@@ -17,7 +21,7 @@ void producer_destroy(struct producer *pd) {
 void producer_place_request(struct producer *pd, int from_cust, int count) {
 	int current_resource_1_id;
 	int current_resource_2_id;
-	int clock_start, clock_stop;
+	int clock_start, clock_stop, time_passed;
 
 	clock_start = get_time_passed(); // clock starts ticking
 	pd->th->on_request_begin(from_cust, count);
@@ -56,10 +60,30 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 
 	// releasing resource_1
 	pthread_mutex_lock(&pd->res_1.lock);
-	clock_stop = get_time_passed();
-	pd->th->on_request_complete(from_cust, clock_stop - clock_start);
 	pd->res_1.available++;
 	pthread_cond_signal(&pd->res_1.cond);
 	pthread_mutex_unlock(&pd->res_1.lock);
 	
+	// request completed
+	clock_stop = get_time_passed();
+	time_passed = clock_stop - clock_start;
+	pd->th->on_request_complete(from_cust, time_passed);
+  if (max_time_request(time_passed, pd->max_time)) {
+    pthread_mutex_lock(&max_time_mutex);
+    pd->max_time = time_passed;
+    pthread_mutex_unlock(&max_time_mutex);
+  }
+
 }
+
+int max_time_request(unsigned int current_request_time, unsigned int current_max) {
+  if (current_request_time > current_max) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+
+
+

@@ -26,6 +26,10 @@ static void pizza_order_complete(int client_id, int clock) {
 	sync_printf("Customer #%d got his pizza(s) in about %d minutes\n", client_id, clock);
 }
 
+static void closing_pizzeria(unsigned int average_time, unsigned int max_time) {
+  sync_printf("Average time: %d, Maximum time: %d ", average_time, max_time);
+}
+
 void pizza_theme_init(struct theme *th) {
 	th->on_request_begin = &pizza_begin_order;
 	th->on_res_1_unavailable = &pizza_wait_cook;
@@ -33,4 +37,5 @@ void pizza_theme_init(struct theme *th) {
 	th->on_res_2_unavailable = &pizza_wait_oven;
 	th->on_res_2_assign = &pizza_in_oven;
 	th->on_request_complete = &pizza_order_complete;
+	th->terminate_producer = &closing_pizzeria;
 }

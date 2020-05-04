@@ -6,6 +6,8 @@ struct producer {
 	struct theme *th;
 	struct resource res_1;
 	struct resource res_2;
+	unsigned int average_time;
+	unsigned int max_time;
 };
 
 void producer_init(struct producer *pd, struct theme *theme, int resource_1, int resource_2);
