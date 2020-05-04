@@ -16,6 +16,8 @@ struct producer {
 	struct resource res_2;
 	unsigned int sum_time;
 	unsigned int max_time;
+  static pthread_mutex_t max_time_mutex;
+  static pthread_mutex_t sum_time_mutex;
 };
 
 void producer_init(struct producer *pd, struct theme *theme, int resource_1, int resource_2);

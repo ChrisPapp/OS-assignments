@@ -3,8 +3,6 @@
 #include "utils.h"
 #include "theme.h"
 
-static pthread_mutex_t max_time_mutex;
-static pthread_mutex_t sum_time_mutex;
 
 void producer_init(struct producer *pd, struct theme *theme, int resource_1, int resource_2){
 	pd->th = theme;
@@ -12,11 +10,21 @@ void producer_init(struct producer *pd, struct theme *theme, int resource_1, int
 	pd->max_time = 0;
 	resource_init(&pd->res_1, resource_1);
 	resource_init(&pd->res_2, resource_2);
+  if (pthread_mutex_init(&pd->max_time_mutex, NULL) != 0) {
+		printf("Error in max_time_mutex initialization.");
+		exit(1);
+	}
+  if (pthread_mutex_init(&pd->sum_time_mutex, NULL) != 0) {
+		printf("Error in sum_time_mutex initialization.");
+		exit(1);
+	}
 }
 
 void producer_destroy(struct producer *pd) {
 	resource_destroy(&pd->res_1);
 	resource_destroy(&pd->res_2);
+  pthread_mutex_destroy(&max_time_mutex);
+  pthread_mutex_destroy(&sum_time_mutex);
 }
 
 void producer_place_request(struct producer *pd, int from_cust, int count) {
@@ -72,8 +80,8 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
   pthread_mutex_lock(&sum_time_mutex);
   pd->sum_time += time_passed; // summarizing time
   pthread_mutex_unlock(&sum_time_mutex);
+  pthread_mutex_lock(&max_time_mutex);
   if (max_time_request(time_passed, pd->max_time)) {
-    pthread_mutex_lock(&max_time_mutex);
     pd->max_time = time_passed; // updating max time
     pthread_mutex_unlock(&max_time_mutex);
   }
