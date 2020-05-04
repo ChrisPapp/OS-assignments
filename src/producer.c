@@ -21,8 +21,8 @@ void producer_init(struct producer *pd, struct theme *theme, int resource_1, int
 void producer_destroy(struct producer *pd) {
 	resource_destroy(&pd->res_1);
 	resource_destroy(&pd->res_2);
-    pthread_mutex_destroy(&pd->max_time_mutex);
-    pthread_mutex_destroy(&pd->sum_time_mutex);
+  pthread_mutex_destroy(&pd->max_time_mutex);
+  pthread_mutex_destroy(&pd->sum_time_mutex);
 }
 
 void producer_place_request(struct producer *pd, int from_cust, int count) {
@@ -87,7 +87,7 @@ void producer_increment_time(struct producer *pd, int time) {
 }
 
 void producer_check_if_time_max(struct producer *pd, int time) {
-    pthread_mutex_lock(&pd->max_time_mutex);
+  pthread_mutex_lock(&pd->max_time_mutex);
 	if (pd->max_time < time) {
 		pd->max_time = time;
 	}
