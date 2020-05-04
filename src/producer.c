@@ -12,19 +12,17 @@ void producer_init(struct producer *pd, struct theme *theme, int resource_1, int
 	resource_init(&pd->res_2, resource_2);
   if (pthread_mutex_init(&pd->max_time_mutex, NULL) != 0) {
 		printf("Error in max_time_mutex initialization.");
-		exit(1);
 	}
   if (pthread_mutex_init(&pd->sum_time_mutex, NULL) != 0) {
 		printf("Error in sum_time_mutex initialization.");
-		exit(1);
 	}
 }
 
 void producer_destroy(struct producer *pd) {
 	resource_destroy(&pd->res_1);
 	resource_destroy(&pd->res_2);
-  pthread_mutex_destroy(&max_time_mutex);
-  pthread_mutex_destroy(&sum_time_mutex);
+    pthread_mutex_destroy(&pd->max_time_mutex);
+    pthread_mutex_destroy(&pd->sum_time_mutex);
 }
 
 void producer_place_request(struct producer *pd, int from_cust, int count) {
@@ -76,22 +74,23 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	// request completed
 	clock_stop = get_time_passed();
 	time_passed = clock_stop - clock_start;
+	// Update time counters
+	producer_check_if_time_max(pd, time_passed);
+	producer_increment_time(pd, time_passed);
 	pd->th->on_request_complete(from_cust, time_passed);
-  pthread_mutex_lock(&sum_time_mutex);
-  pd->sum_time += time_passed; // summarizing time
-  pthread_mutex_unlock(&sum_time_mutex);
-  pthread_mutex_lock(&max_time_mutex);
-  if (max_time_request(time_passed, pd->max_time)) {
-    pd->max_time = time_passed; // updating max time
-    pthread_mutex_unlock(&max_time_mutex);
-  }
 }
 
-int max_time_request(unsigned int current_request_time, unsigned int current_max) {
-  if (current_request_time > current_max) {
-    return 1;
-  } else {
-    return 0;
-  }
+void producer_increment_time(struct producer *pd, int time) {
+  pthread_mutex_lock(&pd->sum_time_mutex);
+  pd->sum_time += time; // summarizing time
+  pthread_mutex_unlock(&pd->sum_time_mutex);
+}
+
+void producer_check_if_time_max(struct producer *pd, int time) {
+    pthread_mutex_lock(&pd->max_time_mutex);
+	if (pd->max_time < time) {
+		pd->max_time = time;
+	}
+	pthread_mutex_unlock(&pd->max_time_mutex);
 }
 
