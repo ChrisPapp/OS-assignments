@@ -11,3 +11,4 @@ struct theme {
 };
 
 void pizza_theme_init(struct theme *th);
+void corona_theme_init(struct theme *th);

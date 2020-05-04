@@ -1,12 +1,17 @@
 #!/bin/bash
 
-DIRNAME='src-single'
+DIRNAME='final'
 FILENAME='t8170011-t8170105-pizza1'
+SHNAME='test-res1'
 
 mkdir -p $DIRNAME
 rm -rf $DIRNAME/*
 touch $DIRNAME/$FILENAME.c
 touch $DIRNAME/$FILENAME.h
+touch $DIRNAME/$SHNAME.sh
+echo "gcc $FILENAME.c -pthread -o assignment
+./assignment 100 1000 1
+" >> $DIRNAME/$SHNAME.sh
 echo "#include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
