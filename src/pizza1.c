@@ -24,15 +24,17 @@ void *order_instant(void *x) {
 int main(int argc, char *argv[]) {
 	int *cust_id;
 	int n_customers;
+	int theme;
 	unsigned int seed;
 	pthread_t *ptr_threads;
 	
 	// checking arguments
-	if (argc == 3) {
+	if (argc == 4) {
 		n_customers = atoi(argv[1]);
 		seed = atoi(argv[2]);
+		theme = atoi(argv[3]);
 	} else {
-		printf("Expected two integers as arguments ([number_of_customers] [rand_r_seed]). \n");
+		printf("Expected two integers as arguments ([number_of_customers] [rand_r_seed] [theme_id (1 or 2)]). \n");
 		exit(1);
 	}
 
@@ -41,7 +43,15 @@ int main(int argc, char *argv[]) {
 	ptr_threads = (pthread_t *) malloc(sizeof(pthread_t) * n_customers);
 	cust_id = (int *) malloc(sizeof(int) * n_customers);
 	th = (struct theme *) malloc(sizeof(struct theme));
-	pizza_theme_init(th);
+
+	if (theme == 1) {
+		pizza_theme_init(th);
+	} else if (theme == 2) {
+		corona_theme_init(th);
+	} else {
+		printf("Wrong theme");
+		exit(1);
+	}
 	pd = (struct producer *) malloc(sizeof(struct producer));
 	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2);
 
@@ -65,7 +75,7 @@ int main(int argc, char *argv[]) {
 	free(ptr_threads);
 	free(pd);
 	free(th);
-	printf("\nPress Enter to continue");
+	printf("\nTry our coronavirus theme! Run './assignment 100 1000 2' \nPress Enter to end");
 	getchar();
 	return 0;
 }

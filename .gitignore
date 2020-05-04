@@ -6,3 +6,4 @@ bin/
 *.sln
 *VC*db
 src-single/
+final/
