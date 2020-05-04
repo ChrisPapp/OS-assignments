@@ -74,10 +74,10 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	// request completed
 	clock_stop = get_time_passed();
 	time_passed = clock_stop - clock_start;
+	pd->th->on_request_complete(from_cust, time_passed);
 	// Update time counters
 	producer_check_if_time_max(pd, time_passed);
 	producer_increment_time(pd, time_passed);
-	pd->th->on_request_complete(from_cust, time_passed);
 }
 
 void producer_increment_time(struct producer *pd, int time) {

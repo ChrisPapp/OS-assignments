@@ -27,7 +27,7 @@ static void pizza_order_complete(int client_id, int clock) {
 }
 
 static void closing_pizzeria(unsigned int average_time, unsigned int max_time) {
-  sync_printf("Average time: %d, Maximum time: %d ", average_time, max_time);
+  sync_printf("Average time: %d (rounded), Maximum time: %d ", average_time, max_time);
 }
 
 void pizza_theme_init(struct theme *th) {
