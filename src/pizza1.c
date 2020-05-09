@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 	free(ptr_threads);
 	free(pd);
 	free(th);
-	printf("\nTry our coronavirus theme! Run './assignment 100 1000 2' \nPress Enter to end");
+	//printf("\nTry our coronavirus theme! Run './assignment 100 1000 2' \nPress Enter to end");
 	getchar();
 	return 0;
 }

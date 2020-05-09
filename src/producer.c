@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "producer.h"
+#include "resource.h"
 #include "utils.h"
 #include "theme.h"
 
