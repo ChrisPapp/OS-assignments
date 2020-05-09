@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 	pd = (struct producer *) malloc(sizeof(struct producer));
-	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2);
+	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2, N_RESOURCE_3);
 
 	// execution step
 	for (int i = 0; i < n_customers; i++) {
