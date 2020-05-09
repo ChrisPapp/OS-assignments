@@ -34,16 +34,14 @@ int main(int argc, char *argv[]) {
 		seed = atoi(argv[2]);
 		theme = atoi(argv[3]);
 	} else {
-		printf("Expected two integers as arguments ([number_of_customers] [rand_r_seed] [theme_id (1 or 2)]). \n");
-		exit(1);
+		printf("Expected three integers as arguments [number_of_customers] [rand_r_seed] [theme_id] \n");
+		return 1;
 	}
 
 	// initialization step
 	utils_init(seed);
-	ptr_threads = (pthread_t *) malloc(sizeof(pthread_t) * n_customers);
 	cust_id = (int *) malloc(sizeof(int) * n_customers);
 	th = (struct theme *) malloc(sizeof(struct theme));
-
 	if (theme == 1) {
 		pizza_theme_init(th);
 	} else if (theme == 2) {
@@ -52,6 +50,7 @@ int main(int argc, char *argv[]) {
 		printf("Wrong theme");
 		exit(1);
 	}
+	ptr_threads = (pthread_t *) malloc(sizeof(pthread_t) * n_customers);
 	pd = (struct producer *) malloc(sizeof(struct producer));
 	producer_init(pd, th, N_RESOURCE_1, N_RESOURCE_2, N_RESOURCE_3);
 
