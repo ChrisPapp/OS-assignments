@@ -32,43 +32,39 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
   int time_working_res_3;
 	int clock_start, clock_stop, time_passed;
 
-  /* before */
-	clock_start = get_time_passed(); // clock starts ticking
-
-	/* main process */
-	pd->th->on_request_begin(from_cust, count);
-	// starting journey through resource_1
+	clock_start = get_time_passed();
+  pd->th->on_request_begin(from_cust, count);
+	// reserve resource_1
 	resource_commit(&pd->res_1);
+	// working resource_1
 	int current_object = 0;
 	while (current_object < count) {
 		current_object++;
 		pd->th->on_res_1_assign(from_cust, current_object);
-		wait_(T_RESOURCE_1); // working resource_1
+		wait_(T_RESOURCE_1);
 	}
-	// starting journey through resource_2
+	// reserve resource_2
 	resource_commit(&pd->res_2);
 	pd->th->on_res_2_assign(from_cust);
-	// releasing resource_1
+	// release resource_1
 	resource_release(&pd->res_1);
-  // continue journey through resource_2
-	wait_(T_RESOURCE_2); // working resource_2
-	// starting journey through resource_3
+  // working resource_2
+	wait_(T_RESOURCE_2);
+	// reserve resource_3
 	resource_commit(&pd->res_3);
 	pd->th->on_res_3_assign(from_cust);
-	// releasing resource_2
+	// release resource_2
   resource_release(&pd->res_2);
-  // continue journey through resource_3
+  // working resource_3
 	time_working_res_3 = rand_generator(T_RESOURCE_3_LOW_LIMIT, T_RESOURCE_3_HIGH_LIMIT);
-	wait_(time_working_res_3); // working resource_3 part 1
-	pd->th->on_request_complete(from_cust, time_passed);
-	wait_(time_working_res_3); // working resource_3 part 2
-  // releasing resource_3
-  resource_release(&pd->res_3);
-  
-  /* after */
-	// request completed
+	wait_(time_working_res_3);
 	clock_stop = get_time_passed();
 	time_passed = clock_stop - clock_start;
+	pd->th->on_request_complete(from_cust, time_passed);
+	wait_(time_working_res_3); 
+	// release resource_3
+  resource_release(&pd->res_3);
+  
 	// update time counters
 	producer_check_if_time_max(pd, time_passed);
 	producer_increment_time(pd, time_passed);

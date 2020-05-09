@@ -27,7 +27,7 @@ static void pizza_wait_delivery_person(int client_id) {
 }
 
 static void pizza_on_the_road(int client_id) {
-  sync_printf("Pizzas of customer were #%d taken off the oven and are on the road.\n", client_id);
+  sync_printf("Pizzas of customer were #%d taken off the oven and are on the way.\n", client_id);
 }
 
 static void pizza_order_complete(int client_id, int clock) {
