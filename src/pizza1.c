@@ -70,10 +70,11 @@ int main(int argc, char *argv[]) {
 	// termination step
 	pd->th->terminate_producer(pd->sum_time/n_customers, pd->max_time);
 	producer_destroy(pd);
-	utils_term();
-	free(ptr_threads);
 	free(pd);
+	free(ptr_threads);
 	free(th);
+	free(cust_id);
+	utils_term();
 	//printf("\nTry our coronavirus theme! Run './assignment 100 1000 2' \nPress Enter to end");
 	getchar();
 	return 0;
