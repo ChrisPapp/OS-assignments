@@ -34,8 +34,10 @@ void utils_term() {
 
 int rand_generator(int low_limit, int high_limit) {
   int rand_n;
+  int diff;
   pthread_mutex_lock(&rand_n_mutex);
-  rand_n = low_limit + (rand() % high_limit);
+  diff = high_limit - low_limit;
+  rand_n = low_limit + (rand() % (diff + 1));
   pthread_mutex_unlock(&rand_n_mutex);
 	return rand_n;
 }
