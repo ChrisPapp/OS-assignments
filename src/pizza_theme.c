@@ -52,3 +52,4 @@ void pizza_theme_init(struct theme *th) {
 	th->on_request_complete = &pizza_order_complete;
 	th->terminate_producer = &closing_pizzeria;
 }
+

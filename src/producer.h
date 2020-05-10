@@ -24,3 +24,4 @@ void producer_check_if_short_time_max(struct producer *pd, int time);
 void producer_increment_short_time(struct producer *pd, int time);
 void producer_check_if_time_max(struct producer *pd, int time);
 void producer_increment_time(struct producer *pd, int time);
+

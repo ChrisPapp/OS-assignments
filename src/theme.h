@@ -1,4 +1,3 @@
-
 #pragma once
 struct theme {
 	void(*on_request_begin)(int /*client_id */, int /*object count*/);
@@ -14,3 +13,4 @@ struct theme {
 
 void pizza_theme_init(struct theme *th);
 void corona_theme_init(struct theme *th);
+

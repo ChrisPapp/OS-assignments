@@ -3,7 +3,6 @@
 #include "utils.h"
 
 // TODO
-
 static void corona_requests_sanitizer(int client_id, int count) {
 	sync_printf("Masked grandpa #%d came at the pharmacy after %u minutes looking for %d hand sanitizer(s)\n", client_id, get_time_passed(), count);
 }
@@ -41,3 +40,4 @@ void corona_theme_init(struct theme *th) {
 	th->on_request_complete = &sanitizers_complete;
 	th->terminate_producer = &closing_pharmacy;
 }
+

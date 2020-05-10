@@ -4,7 +4,6 @@
 #include "utils.h"
 #include "theme.h"
 
-
 void producer_init(struct producer *pd, struct theme *theme, int resource_1, int resource_2, int resource_3){
 	pd->th = theme;
 	pd->sum_time = 0;
