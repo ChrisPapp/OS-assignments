@@ -7,7 +7,7 @@ static void pizza_begin_order(int client_id, int count) {
 }
 
 static void pizza_wait_cook(int client_id) {
-	sync_printf("No available cook found. Customer #%d will have to wait...\n", client_id);
+	sync_printf("No available cook found. Order of customer #%d is pending... \n", client_id);
 }
 
 static void pizza_prepare(int client_id, int obj_id) {
@@ -15,27 +15,29 @@ static void pizza_prepare(int client_id, int obj_id) {
 }
 
 static void pizza_wait_oven(int client_id) {
-	sync_printf("No available oven found. Cook #%d will have to wait...\n", client_id);
+	sync_printf("No available oven found. Order of customer #%d is pending...\n", client_id);
 }
 
 static void pizza_in_oven(int client_id) {
-	sync_printf("Baking the pizza(s) of customer #%d! It smells nice! Almost done...\n", client_id);
+	sync_printf("Baking the pizza(s) of customer #%d! Mmmmmmmmmmmmm! It smells nice!\n", client_id);
 }
 
 static void pizza_wait_delivery_person(int client_id) {
-  sync_printf("No available delivery person found to take the pizza(s) of customer #%d off the oven and deliver the order.\n", client_id);
+  sync_printf("No available delivery person found. Order of customer #%d is pending....\n", client_id);
 }
 
 static void pizza_on_the_road(int client_id) {
-  sync_printf("Pizzas of customer were #%d taken off the oven and are on the way.\n", client_id);
+  sync_printf("Pizzas of customer #%d were taken off the oven and are on the way.\n", client_id);
 }
 
-static void pizza_order_complete(int client_id, int clock, int clock_delivery) {
-	sync_printf("Order of customer #%d is delivered after %d minutes and was getting cold for %d minutes.\n", client_id, clock, clock_delivery);
+static void pizza_order_complete(int client_id, int time_cooling, int clock) {
+	sync_printf("Order of customer #%d is delivered after %d minutes and was getting cold for %d minutes.\n", client_id, clock, time_cooling);
 }
 
-static void closing_pizzeria(unsigned int delivery_average_time, unsigned int delivery_max_time, unsigned int average_time, unsigned int max_time) {
-  sync_printf("\nAverage cooling time: %d (rounded), Maximum cooling time: %d\n", delivery_average_time, delivery_max_time);
+static void closing_pizzeria(unsigned int cooling_average_time, unsigned int cooling_max_time, unsigned int average_time, unsigned int max_time) {
+  sync_printf("\n");
+  sync_printf("Average cooling time: %d (rounded), Maximum cooling time: %d", cooling_average_time, cooling_max_time);
+  sync_printf("\n");
   sync_printf("Average time: %d (rounded), Maximum time: %d", average_time, max_time);
 }
 

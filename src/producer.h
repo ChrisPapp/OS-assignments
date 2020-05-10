@@ -7,10 +7,10 @@ struct producer {
   struct resource res_1;
   struct resource res_2;
   struct resource res_3;
-  unsigned int short_sum_time;
-  unsigned int short_max_time;
-  pthread_mutex_t short_sum_time_mutex;
-  pthread_mutex_t short_max_time_mutex;
+  unsigned int sum_time_short;
+  unsigned int max_time_short;
+  pthread_mutex_t sum_time_short_mutex;
+  pthread_mutex_t max_time_short_mutex;
   unsigned int sum_time;
   unsigned int max_time;
   pthread_mutex_t sum_time_mutex;

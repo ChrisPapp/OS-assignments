@@ -1,4 +1,4 @@
-#include "producer.h"
+#include "resource.h"
 
 void resource_init(struct resource *res, int available) {
 	pthread_mutex_init(&res->lock, NULL);
@@ -11,10 +11,10 @@ void resource_destroy(struct resource *res) {
 	pthread_cond_destroy(&res->cond);
 }
 
-void resource_commit(struct resource *res) {
+void resource_commit(struct resource *res) { //, struct theme *th, int from_cust) {
   pthread_mutex_lock(&res->lock);
 	while (res->available == 0) {
-		//pd->th->on_res_unavailable(from_cust);
+		//th->on_res_unavailable(from_cust);
 		pthread_cond_wait(&res->cond, &res->lock);
 	}
 	res->available--;
