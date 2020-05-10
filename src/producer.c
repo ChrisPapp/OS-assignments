@@ -39,9 +39,10 @@ void producer_destroy(struct producer *pd) {
 }
 
 void producer_place_request(struct producer *pd, int from_cust, int count) {
+	//TODO short_clock better
   int time_working_res_3;
 	int clock_start, clock_stop, time_passed;
-	//int short_clock_start, short_clock_stop, short_time_passed;
+  int short_clock_start, short_clock_stop, short_time_passed;
 
 	clock_start = get_time_passed();
   pd->th->on_request_begin(from_cust, count);
@@ -61,7 +62,7 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	resource_release(&pd->res_1);
   /* working resource_2 */
 	wait_(T_RESOURCE_2);
-	//short_clock_start = get_time_passed();
+	short_clock_start = get_time_passed();
 	/* reserve resource_3 */
 	resource_commit(&pd->res_3);
 	pd->th->on_res_3_assign(from_cust);
@@ -70,18 +71,17 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
   /* working resource_3 */
 	time_working_res_3 = rand_generator(T_RESOURCE_3_LOW_LIMIT, T_RESOURCE_3_HIGH_LIMIT);
 	wait_(time_working_res_3);
+	short_clock_stop = get_time_passed();
+	short_time_passed = short_clock_stop - short_clock_start;
 	clock_stop = get_time_passed();
 	time_passed = clock_stop - clock_start;
-	//short_clock_stop = get_time_passed();
-	//short_time_passed = short_clock_stop - short_clock_start;
-	//sync_printf("%d, %d\n", short_time_passed, time_working_res_3);
-	pd->th->on_request_complete(from_cust, time_passed, time_working_res_3);
+	pd->th->on_request_complete(from_cust, time_passed, short_time_passed);
 	wait_(time_working_res_3); 
 	/* release resource_3 */
   resource_release(&pd->res_3);
 	/* update time counters */
-	producer_check_if_short_time_max(pd, time_working_res_3);
-	producer_increment_short_time(pd, time_working_res_3);
+	producer_check_if_short_time_max(pd, short_time_passed);
+	producer_increment_short_time(pd, short_time_passed);
 	producer_check_if_time_max(pd, time_passed);
 	producer_increment_time(pd, time_passed);
 }
