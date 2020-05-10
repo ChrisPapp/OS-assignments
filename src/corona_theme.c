@@ -2,6 +2,8 @@
 #include "theme.h"
 #include "utils.h"
 
+// TODO
+
 static void corona_requests_sanitizer(int client_id, int count) {
 	sync_printf("Masked grandpa #%d came at the pharmacy after %u minutes looking for %d hand sanitizer(s)\n", client_id, get_time_passed(), count);
 }
@@ -22,12 +24,12 @@ static void sanitizer_mixing(int client_id) {
 	sync_printf("Mixing sanitizers of crazy grandpa #%d with fake ethyl alcohol aka gasoline! It smells nice! Almost done...\n", client_id);
 }
 
-static void sanitizers_complete(int client_id, int clock) {
+static void sanitizers_complete(int client_id, int clock, int clock_2) {
 	sync_printf("Crazy grandpa #%d got his hand sanitizers in about %d months\n", client_id, clock);
 }
 
-static void closing_pharmacy(unsigned int average_time, unsigned int max_time) {
-  sync_printf("Average time: %d (rounded), Maximum time: %d ", average_time, max_time);
+static void closing_pharmacy(unsigned int short_average_time, unsigned int short_max_time, unsigned int average_time, unsigned int max_time) {
+  sync_printf("Average time: %d (rounded), Maximum time: %d", average_time, max_time);
 }
 
 void corona_theme_init(struct theme *th) {

@@ -30,12 +30,13 @@ static void pizza_on_the_road(int client_id) {
   sync_printf("Pizzas of customer were #%d taken off the oven and are on the way.\n", client_id);
 }
 
-static void pizza_order_complete(int client_id, int clock) {
-	sync_printf("Order of customer #%d is delivered after %d minutes.\n", client_id, clock);
+static void pizza_order_complete(int client_id, int clock, int clock_delivery) {
+	sync_printf("Order of customer #%d is delivered after %d minutes and was getting cold for %d minutes.\n", client_id, clock, clock_delivery);
 }
 
-static void closing_pizzeria(unsigned int average_time, unsigned int max_time) {
-  sync_printf("\nAverage time: %d (rounded), Maximum time: %d ", average_time, max_time);
+static void closing_pizzeria(unsigned int delivery_average_time, unsigned int delivery_max_time, unsigned int average_time, unsigned int max_time) {
+  sync_printf("\nAverage cooling time: %d (rounded), Maximum cooling time: %d\n", delivery_average_time, delivery_max_time);
+  sync_printf("Average time: %d (rounded), Maximum time: %d", average_time, max_time);
 }
 
 void pizza_theme_init(struct theme *th) {
