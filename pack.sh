@@ -23,21 +23,27 @@ echo "#include <stdio.h>
   #include <unistd.h>
 #endif
 " >> $DIRNAME/$FILENAME.h
-echo "#include \"${FILENAME}.h\"" >> $DIRNAME/$FILENAME.c
+echo "#include \"${FILENAME}.h\"
+" >> $DIRNAME/$FILENAME.c
 
 chmod 744 ./$DIRNAME/$SHNAME.sh
 
-awk 'FNR==1 {print "\n/* Contents of:", FILENAME, "*/"} (index($1, "#include") == 0) {print}' \
+awk 'FNR==1 {print "/*** Contents of:", FILENAME, "***/"} {if (!(substr($1, 1, 1) == "#" && $1 != "#define")) print}' \
 ./src/utils.h \
 ./src/theme.h \
 ./src/resource.h \
 ./src/producer.h >> $DIRNAME/$FILENAME.h
 
-awk 'FNR==1 {print "\n/*Contents of:", FILENAME, "*/"} (index($1, "#include") == 0) {print}' \
+awk 'FNR==1 {print "/*** Contents of:", FILENAME, "***/"} {if ($1 != "#include") print}' \
 ./src/pizza1.c \
 ./src/producer.c \
 ./src/resource.c \
 ./src/utils.c \
 ./src/pizza_theme.c \
-./src/corona_theme.c >> $DIRNAME/$FILENAME.c
+./src/corona_theme.c >> $DIRNAME/$FILENAME.c 
 
+# awk 'FNR==1 {print "\n/* Contents of:", FILENAME, "*/"} (index($1, "#include") == 0) {print}' \
+# ./src/utils.h \
+# ./src/theme.h \
+# ./src/resource.h \
+# ./src/producer.h >> $DIRNAME/$FILENAME.h
