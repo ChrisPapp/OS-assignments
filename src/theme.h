@@ -9,7 +9,7 @@ struct theme {
 	void(*on_res_3_unavailable)(int /*client_id */);
 	void(*on_res_3_assign)(int /*client_id */);
 	void(*on_request_complete)(int /*client_id */, int /*work_time_resource_3*/, int /*clock*/);
-	void(*terminate_producer)(unsigned int /*work_time_res_3_average_time*/, unsigned int /*work_time_res_3_max_time*/, unsigned int /*average_time*/, unsigned int /*max_time*/);
+	void(*terminate_producer)(float /*work_time_res_3_average_time*/, unsigned int /*work_time_res_3_max_time*/, float /*average_time*/, unsigned int /*max_time*/);
 };
 
 void pizza_theme_init(struct theme *th);

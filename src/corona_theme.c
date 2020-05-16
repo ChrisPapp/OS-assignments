@@ -34,11 +34,12 @@ static void sanitizers_complete(int client_id, int clock, int clock_2) {
 	sync_printf("Crazy grandpa #%d got his hand sanitizers in about %d months\n", client_id, clock);
 }
 
-static void closing_pharmacy(unsigned int average_ready_time, unsigned int ready_max_time, unsigned int average_time, unsigned int max_time) {
+
+static void closing_pharmacy(float average_ready_time, unsigned int ready_max_time, float average_time, unsigned int max_time) {
 	sync_printf("\n");
-	sync_printf("Average time it took to unseal hand sanitizer: %d (rounded), Maximum time it took to unseal hand sanitizer: %d", average_ready_time, ready_max_time);
+	sync_printf("Average time it took to unseal hand sanitizer: %.2f, Maximum time it took to unseal hand sanitizer: %d", average_ready_time, ready_max_time);
 	sync_printf("\n");
-	sync_printf("Average time: %d (rounded), Maximum time: %d", average_time, max_time);
+	sync_printf("Average time: %.2f, Maximum time: %d", average_time, max_time);
 	sync_printf("\n");
 }
 
