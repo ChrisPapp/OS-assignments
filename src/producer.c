@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <pthread.h>
 #include "producer.h"
-#include "resource.h"
-#include "utils.h"
-#include "theme.h"
 
 void producer_init(struct producer *pd, struct theme *theme, int resource_1, int resource_2, int resource_3){
 	pd->th = theme;

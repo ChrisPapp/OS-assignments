@@ -1,6 +1,4 @@
-#include <pthread.h>
 #include "resource.h"
-#include "theme.h"
 
 void resource_init(struct resource *res, int available) {
 	pthread_mutex_init(&res->lock, NULL);

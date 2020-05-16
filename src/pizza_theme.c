@@ -39,6 +39,7 @@ static void closing_pizzeria(unsigned int cooling_average_time, unsigned int coo
   sync_printf("Average cooling time: %d (rounded), Maximum cooling time: %d", cooling_average_time, cooling_max_time);
   sync_printf("\n");
   sync_printf("Average time: %d (rounded), Maximum time: %d", average_time, max_time);
+  sync_printf("\n");
 }
 
 void pizza_theme_init(struct theme *th) {

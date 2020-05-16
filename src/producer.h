@@ -1,4 +1,9 @@
 #pragma once
+#include <stdio.h>
+#include <pthread.h>
+#include "resource.h"
+#include "theme.h"
+#include "utils.h"
 
 struct producer {
   struct theme *th;

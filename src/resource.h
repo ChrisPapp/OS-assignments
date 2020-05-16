@@ -1,4 +1,6 @@
 #pragma once
+#include <pthread.h>
+#include "theme.h"
 
 struct resource {
   pthread_mutex_t lock;
