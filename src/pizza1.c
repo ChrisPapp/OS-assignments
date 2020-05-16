@@ -75,8 +75,7 @@ int main(int argc, char *argv[]) {
   free(th);
   free(cust_id);
   utils_term();
-  //printf("\nTry our coronavirus theme! Run './assignment 100 1000 2' \nPress Enter to end");
+  printf("\nTry our coronavirus theme! Run './assignment 100 1000 2' \nPress Enter to end");
   getchar();
   return 0;
 }
-

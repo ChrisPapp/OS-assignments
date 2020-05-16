@@ -73,4 +73,3 @@ static unsigned int current_time_in_seconds() {
 unsigned int get_time_passed() {
 	return current_time_in_seconds() - clock_start;
 }
-

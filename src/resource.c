@@ -1,4 +1,6 @@
+#include <pthread.h>
 #include "resource.h"
+#include "theme.h"
 
 void resource_init(struct resource *res, int available) {
 	pthread_mutex_init(&res->lock, NULL);
@@ -11,10 +13,9 @@ void resource_destroy(struct resource *res) {
 	pthread_cond_destroy(&res->cond);
 }
 
-void resource_commit(struct resource *res) { //, struct theme *th, int from_cust) {
+void resource_commit(struct resource *res) {
   pthread_mutex_lock(&res->lock);
 	while (res->available == 0) {
-		//th->on_res_unavailable(from_cust);
 		pthread_cond_wait(&res->cond, &res->lock);
 	}
 	res->available--;
@@ -27,4 +28,3 @@ void resource_release(struct resource *res) {
 	pthread_cond_signal(&res->cond);
 	pthread_mutex_unlock(&res->lock);
 }
-

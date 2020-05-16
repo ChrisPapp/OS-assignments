@@ -16,4 +16,3 @@ int rand_generator(int low_limit, int high_limit);
 void sync_printf(const char *format, ...);
 void wait_(int seconds);
 unsigned int get_time_passed();
-

@@ -1,6 +1,4 @@
 #pragma once
-#include <pthread.h>
-#include "theme.h"
 
 struct resource {
   pthread_mutex_t lock;
@@ -12,4 +10,3 @@ void resource_init(struct resource *res, int available);
 void resource_destroy(struct resource *res);
 void resource_commit(struct resource *res); //, struct theme *th, int from_cust);
 void resource_release(struct resource *res);
-

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <pthread.h>
 #include "producer.h"
 #include "resource.h"
 #include "utils.h"
@@ -46,7 +47,7 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	clock_start = get_time_passed();
   pd->th->on_request_begin(from_cust, count);
 	/* reserve resource_1 */
-	resource_commit(&pd->res_1); //, &pd->th, from_cust);
+	resource_commit(&pd->res_1);
 	/* working resource_1 */
 	int current_object = 0;
 	while (current_object < count) {
@@ -55,7 +56,7 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 		wait_(T_RESOURCE_1);
 	}
 	/* reserve resource_2 */
-	resource_commit(&pd->res_2); //, &pd->th, from_cust);
+	resource_commit(&pd->res_2);
 	pd->th->on_res_2_assign(from_cust);
 	/* release resource_1 */
 	resource_release(&pd->res_1);
@@ -63,7 +64,7 @@ void producer_place_request(struct producer *pd, int from_cust, int count) {
 	wait_(T_RESOURCE_2);
   clock_start_short = get_time_passed();
 	/* reserve resource_3 */
-	resource_commit(&pd->res_3); //, &pd->th, from_cust);
+	resource_commit(&pd->res_3);
 	pd->th->on_res_3_assign(from_cust);
 	/* release resource_2 */
   resource_release(&pd->res_2);
@@ -111,4 +112,3 @@ void producer_check_if_time_max(struct producer *pd, int time) {
 	}
 	pthread_mutex_unlock(&pd->max_time_mutex);
 }
-
