@@ -33,7 +33,7 @@ project "Pizza"
         defines "DEBUG"
         runtime "Debug"
         symbols "On"
-        debugargs { "2" , "3" }
+        debugargs { "2" , "3", "1" }
 
     filter "configurations:Release"
         defines "RELEASE"
