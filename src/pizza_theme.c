@@ -34,11 +34,11 @@ static void pizza_order_complete(int client_id, int time_cooling, int clock) {
 	sync_printf("Order of customer #%d is delivered after %d minutes and was getting cold for %d minutes.\n", client_id, clock, time_cooling);
 }
 
-static void closing_pizzeria(unsigned int cooling_average_time, unsigned int cooling_max_time, unsigned int average_time, unsigned int max_time) {
+static void closing_pizzeria(float cooling_average_time, unsigned int cooling_max_time, float average_time, unsigned int max_time) {
   sync_printf("\n");
-  sync_printf("Average cooling time: %d (rounded), Maximum cooling time: %d", cooling_average_time, cooling_max_time);
+  sync_printf("Average cooling time: %.2f, Maximum cooling time: %d", cooling_average_time, cooling_max_time);
   sync_printf("\n");
-  sync_printf("Average time: %d (rounded), Maximum time: %d", average_time, max_time);
+  sync_printf("Average time: %.2f, Maximum time: %d", average_time, max_time);
 }
 
 void pizza_theme_init(struct theme *th) {

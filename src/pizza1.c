@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
   }
 
   // termination step
-  pd->th->terminate_producer(pd->sum_time_short/n_customers, pd->max_time_short, pd->sum_time/n_customers, pd->max_time);
+  pd->th->terminate_producer((float)pd->sum_time_short/(float)n_customers, pd->max_time_short, (float)pd->sum_time/(float)n_customers, pd->max_time);
   producer_destroy(pd);
   free(pd);
   free(ptr_threads);
