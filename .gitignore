@@ -8,3 +8,4 @@ bin/
 src-single/
 final/
 *\.sw.
+.DS_Store
