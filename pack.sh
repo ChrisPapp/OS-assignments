@@ -42,8 +42,3 @@ awk 'FNR==1 {print "/*** Contents of:", FILENAME, "***/"} {if ($1 != "#include")
 ./src/pizza_theme.c \
 ./src/corona_theme.c >> $DIRNAME/$FILENAME.c 
 
-# awk 'FNR==1 {print "\n/* Contents of:", FILENAME, "*/"} (index($1, "#include") == 0) {print}' \
-# ./src/utils.h \
-# ./src/theme.h \
-# ./src/resource.h \
-# ./src/producer.h >> $DIRNAME/$FILENAME.h
